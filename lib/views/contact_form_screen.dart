@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lista_contatos_firebase/controllers/contact_form_controller.dart';
+import 'package:mobx/mobx.dart';
 
 class ContactFormScreen extends StatefulWidget {
   @override
@@ -9,6 +10,25 @@ class ContactFormScreen extends StatefulWidget {
 class _ContactFormScreenState extends State<ContactFormScreen> {
 
   final controller = ContactFormController();
+
+  ReactionDisposer disposer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    disposer = autorun((_) {
+      if(controller.contatoFoiSalvo) {
+        Navigator.of(context).pop(true);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    disposer();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +64,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: controller.salvar,
+        onPressed: controller.salvarContato,
         child: Icon(
           Icons.save,
         ),
