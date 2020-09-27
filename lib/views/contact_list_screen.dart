@@ -43,15 +43,33 @@ class _ContactListScreenState extends State<ContactListScreen> {
                           ),
                           subtitle: Text(
                               '${controller.listaContatos[index].email} | ${controller.listaContatos[index].telefone}'),
-                          trailing: IconButton(
-                            color: Colors.red,
-                            icon: Icon(
-                              Icons.delete,
+                          trailing: Container(
+                            width: 100,
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  color: Colors.blue,
+                                  icon: Icon(Icons.edit),
+                                  onPressed: () {
+                                    Navigator.of(context).pushNamed(
+                                      AppRoutes.CONTACTS_FORM,
+                                      arguments:
+                                          controller.listaContatos[index],
+                                    );
+                                  },
+                                ),
+                                IconButton(
+                                  color: Colors.red,
+                                  icon: Icon(
+                                    Icons.delete,
+                                  ),
+                                  onPressed: () {
+                                    controller.excluirContato(
+                                        controller.listaContatos[index].id);
+                                  },
+                                ),
+                              ],
                             ),
-                            onPressed: () {
-                              controller.excluirContato(
-                                  controller.listaContatos[index].id);
-                            },
                           ),
                         ),
                         Divider()

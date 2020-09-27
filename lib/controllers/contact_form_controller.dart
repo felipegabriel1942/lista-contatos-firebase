@@ -13,6 +13,12 @@ abstract class _ContactFormControllerBase with Store {
   final listController = GetIt.I<ContactListController>();
 
   @observable
+  int id;
+
+  @action
+  void setId(int value) => id = value;
+
+  @observable
   bool isBusy = false;
 
   @observable
@@ -38,12 +44,18 @@ abstract class _ContactFormControllerBase with Store {
 
   Future<void> salvarContato() async {
     final contact = Contact(
+      id: id,
       email: email,
       telefone: telefone,
       nome: nome,
     );
 
-    await db.contactRepositoryDao.insertContact(contact);
+    if (id == null) {
+      await db.contactRepositoryDao.insertContact(contact);
+    } else {
+      await db.contactRepositoryDao.updateContact(contact);
+    }
+    
     await listController.loadContatos();
 
     contatoFoiSalvo = true;

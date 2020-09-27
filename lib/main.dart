@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:lista_contatos_firebase/controllers/contact_form_controller.dart';
 import 'package:lista_contatos_firebase/controllers/contact_list_controller.dart';
 import 'package:lista_contatos_firebase/data/database/app_database.dart';
 import 'package:lista_contatos_firebase/utils/app_routes.dart';
@@ -12,7 +11,7 @@ void main() async {
   AppDatabase db = await $FloorAppDatabase.databaseBuilder('app_database.db').build();
   GetIt.instance.registerSingleton<AppDatabase>(db);
   GetIt.instance.registerSingleton<ContactListController>(ContactListController());
-  GetIt.instance.registerSingleton<ContactFormController>(ContactFormController());
+
   runApp(
     MyApp(),
   );
