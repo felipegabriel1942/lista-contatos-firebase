@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:lista_contatos_firebase/data/database/app_database.dart';
 import 'package:lista_contatos_firebase/data/model/contact.dart';
+import 'package:lista_contatos_firebase/controllers/contact_list_controller.dart';
 import 'package:mobx/mobx.dart';
 part 'contact_form_controller.g.dart';
 
@@ -9,6 +10,7 @@ class ContactFormController = _ContactFormControllerBase
 
 abstract class _ContactFormControllerBase with Store {
   final db = GetIt.I<AppDatabase>();
+  final listController = GetIt.I<ContactListController>();
 
   @observable
   bool isBusy = false;
@@ -42,6 +44,8 @@ abstract class _ContactFormControllerBase with Store {
     );
 
     await db.contactRepositoryDao.insertContact(contact);
+    await listController.loadContatos();
+
     contatoFoiSalvo = true;
   }
 }

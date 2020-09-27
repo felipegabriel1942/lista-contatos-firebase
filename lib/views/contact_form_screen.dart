@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lista_contatos_firebase/controllers/contact_form_controller.dart';
 import 'package:mobx/mobx.dart';
 
@@ -9,7 +10,7 @@ class ContactFormScreen extends StatefulWidget {
 
 class _ContactFormScreenState extends State<ContactFormScreen> {
 
-  final controller = ContactFormController();
+  final controller = GetIt.I<ContactFormController>();
 
   ReactionDisposer disposer;
 
@@ -19,7 +20,8 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
 
     disposer = autorun((_) {
       if(controller.contatoFoiSalvo) {
-        Navigator.of(context).pop(true);
+        Navigator.of(context).pop();
+        controller.contatoFoiSalvo = false;
       }
     });
   }

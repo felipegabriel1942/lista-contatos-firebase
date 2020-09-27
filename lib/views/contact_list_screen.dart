@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lista_contatos_firebase/controllers/contact_list_controller.dart';
 import 'package:lista_contatos_firebase/utils/app_routes.dart';
 
@@ -9,7 +10,7 @@ class ContactListScreen extends StatefulWidget {
 }
 
 class _ContactListScreenState extends State<ContactListScreen> {
-  final controller = ContactListController();
+  final controller = GetIt.I<ContactListController>();
 
   @override
   void initState() {
@@ -43,11 +44,15 @@ class _ContactListScreenState extends State<ContactListScreen> {
                           subtitle: Text(
                               '${controller.listaContatos[index].email} | ${controller.listaContatos[index].telefone}'),
                           trailing: IconButton(
-                              color: Colors.red,
-                              icon: Icon(
-                                Icons.delete,
-                              ),
-                              onPressed: () {}),
+                            color: Colors.red,
+                            icon: Icon(
+                              Icons.delete,
+                            ),
+                            onPressed: () {
+                              controller.excluirContato(
+                                  controller.listaContatos[index].id);
+                            },
+                          ),
                         ),
                         Divider()
                       ],

@@ -19,6 +19,8 @@ abstract class _ContactListControllerBase with Store {
   Future<void> loadContatos() async {
     isBusy = true;
 
+    listaContatos.clear();
+
     await db.contactRepositoryDao.getAll().then((value) {
       value.forEach((element) {
         listaContatos.add(element);
@@ -26,5 +28,13 @@ abstract class _ContactListControllerBase with Store {
     });
 
     isBusy = false;
+  }
+
+    Future<void> excluirContato(int id) async {
+    var contact = Contact();
+    await db.contactRepositoryDao.getById(id).then((value) => contact = value);
+    await db.contactRepositoryDao.deleteContact(contact);
+    listaContatos.removeWhere((element) => element.id == id);
+    
   }
 }
